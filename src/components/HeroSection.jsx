@@ -1,15 +1,17 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { motion } from 'framer-motion';
 import Spline from '@splinetool/react-spline';
 import { Mail, Phone, Linkedin } from 'lucide-react';
 
 const HeroSection = () => {
+  const playAreaRef = useRef(null);
+
   return (
     <section id="home" className="relative min-h-[90vh] w-full overflow-hidden bg-black text-white">
       {/* Full-width interactive Spline background */}
       <div className="absolute inset-0 z-0">
         <Spline
-          scene="https://prod.spline.design/ESO6PnMadasO0hU3/scene.splinecode"
+          scene="https://prod.spline.design/G0i6ZIv4Vd1oW14L/scene.splinecode"
           style={{ width: '100%', height: '100%' }}
         />
       </div>
@@ -87,16 +89,47 @@ const HeroSection = () => {
               </span>
             ))}
           </div>
-        </motion.div>
 
-        {/* Spacer / subtle card to balance layout on large screens */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.98 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, ease: 'easeOut' }}
-          viewport={{ once: true }}
-          className="hidden h-[420px] w-full max-w-md rounded-2xl border border-cyan-400/20 bg-white/5 backdrop-blur md:block"
-        />
+          {/* Mini Play Area: draggable, tappable orbs */}
+          <div ref={playAreaRef} className="mt-10 h-28 w-full max-w-xl rounded-xl border border-cyan-400/20 bg-white/5 p-3 backdrop-blur">
+            <div className="mb-2 flex items-center justify-between px-1 text-xs text-slate-300">
+              <span>Playground</span>
+              <span className="text-cyan-300">drag • hover • tap</span>
+            </div>
+            <div className="relative h-16 w-full">
+              <motion.div
+                drag
+                dragConstraints={playAreaRef}
+                dragElastic={0.6}
+                whileHover={{ scale: 1.1, rotate: 6 }}
+                whileTap={{ scale: 0.95 }}
+                className="absolute left-2 top-2 grid h-10 w-10 place-items-center rounded-full border border-cyan-400/40 bg-cyan-400/10 text-cyan-200 shadow-[0_0_24px_rgba(34,211,238,0.35)]"
+              >
+                ●
+              </motion.div>
+              <motion.div
+                drag
+                dragConstraints={playAreaRef}
+                dragElastic={0.5}
+                whileHover={{ scale: 1.1, rotate: -8 }}
+                whileTap={{ scale: 0.95 }}
+                className="absolute left-16 top-6 grid h-10 w-10 place-items-center rounded-full border border-fuchsia-400/40 bg-fuchsia-400/10 text-fuchsia-200 shadow-[0_0_24px_rgba(232,121,249,0.35)]"
+              >
+                ◆
+              </motion.div>
+              <motion.div
+                drag
+                dragConstraints={playAreaRef}
+                dragElastic={0.7}
+                whileHover={{ scale: 1.1, rotate: 12 }}
+                whileTap={{ scale: 0.95 }}
+                className="absolute left-32 top-1 grid h-10 w-10 place-items-center rounded-full border border-blue-400/40 bg-blue-400/10 text-blue-200 shadow-[0_0_24px_rgba(96,165,250,0.35)]"
+              >
+                ■
+              </motion.div>
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );
